@@ -18,6 +18,7 @@ class Polygon {
     }
     
     calculateArea() {
+        //using Gauss Shoelace
         let sum = 0;
         for (let i = 0; i < this.dots.length; i++) {
             const point = this.dots[i];

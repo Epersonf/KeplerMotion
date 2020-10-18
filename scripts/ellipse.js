@@ -39,8 +39,9 @@ class Ellipse {
         return Math.PI * this.a * this.b;
     }
 
-    draw(x, y, areasAmt=13) {
-        const triangleArea = this.getArea() / areasAmt;
+    draw(x, y, areasAmt=12) {
+        //calculates area of individual polygon
+        const polygonArea = this.getArea() / areasAmt;
 
         //color set
         this.ctx.strokeStyle = this.color;
@@ -48,32 +49,32 @@ class Ellipse {
 
         //draw ellipse
         this.ctx.beginPath();
-        const firstX = x + this.a * Math.sin(0);
-        const firstY = y + this.b * Math.cos(0);
-        this.ctx.moveTo(firstX, firstY);
+        const firstPos = [x + this.a * Math.sin(0), y + this.b * Math.cos(0)];
+        this.ctx.moveTo(firstPos[0], firstPos[1]);
         
-        let polygon = new Polygon(x + this.focus[0], y + this.focus[1]);
-        polygon.addPoint(firstX, firstY);
+        //create polygon to discover the area
+        const focusPos = [x + this.focus[0], y + this.focus[1]];
+        let polygon = new Polygon(focusPos[0], focusPos[1]);
+        polygon.addPoint(firstPos[0], firstPos[1]);
 
-        let actualX, actualY, previousArea;
         for (let t = 0; t <= 2 * Math.PI; t += .002) {
 
-            actualX = x + this.a * Math.sin(t);
-            actualY = y + this.b * Math.cos(t);
-
-            this.ctx.lineTo(actualX, actualY);
+            //draw circle
+            const actualPos = [x + this.a * Math.sin(t), y + this.b * Math.cos(t)];
+            this.ctx.lineTo(actualPos[0], actualPos[1]);
             this.ctx.stroke();
-            //draw line
-            polygon.addPoint(actualX, actualY);
-            if (polygon.calculateArea() >= triangleArea || t == 0) {
+
+            //draw triangles
+            polygon.addPoint(actualPos[0], actualPos[1]);
+            if (polygon.calculateArea() >= polygonArea || t == 0) {
                 polygon.clearPoints();
-                this.ctx.moveTo(x + this.focus[0], y + this.focus[1]);
-                this.ctx.lineTo(actualX, actualY);
+                this.ctx.moveTo(focusPos[0], focusPos[1]);
+                this.ctx.lineTo(actualPos[0], actualPos[1]);
                 this.ctx.stroke();
             }
         }
         
-        this.ctx.lineTo(firstX, firstY);
+        this.ctx.lineTo(firstPos[0], firstPos[1]);
         this.ctx.stroke();
     }
 }
