@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/style.css">
+        <title>Ellipse</title>
+    </head>
+    <body>
+        <div class="tools">
+            <label>A:
+                <input type="number" min="50" max="500" value="50" class="slider" id="a">
+            </label>
+
+            <label>B:
+                <input type="number" min="50" max="500" value="50" class="slider" id="b">
+            </label>
+            <input type="checkbox" id="use-left" name="scales" checked>Use left focus</input>
+        </div>
+        <canvas id="canvas" width="1500" height="800"></canvas>
+
+        <script src="scripts/ellipse.js"></script>
+        <script src="scripts/points.js"></script>
+        <script src="scripts/input_value.js"></script>
+        <script src="scripts/ui_manager.js"></script>
+    </body>
+</html>
