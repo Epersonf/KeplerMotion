@@ -44,6 +44,8 @@ class Ellipse {
         const polygonArea = this.getArea() / areasAmt;
 
         //color set
+        ctx.font = "12px Arial";
+        ctx.textAlign = "center";
         this.ctx.strokeStyle = this.color;
         this.ctx.fillStyle = this.color;
 
@@ -57,7 +59,7 @@ class Ellipse {
         let polygon = new Polygon(focusPos[0], focusPos[1]);
         polygon.addPoint(firstPos[0], firstPos[1]);
 
-        for (let t = 0; t <= 2 * Math.PI; t += .002) {
+        for (let t = 0; t <= 2 * Math.PI; t += .005) {
 
             //draw circle
             const actualPos = [x + this.a * Math.sin(t), y + this.b * Math.cos(t)];
@@ -66,7 +68,7 @@ class Ellipse {
 
             //draw triangles
             polygon.addPoint(actualPos[0], actualPos[1]);
-            if (polygon.calculateArea() >= polygonArea || t == 0) {
+            if (polygon.getArea() >= polygonArea || t == 0) {
                 polygon.clearPoints();
                 this.ctx.moveTo(focusPos[0], focusPos[1]);
                 this.ctx.lineTo(actualPos[0], actualPos[1]);
